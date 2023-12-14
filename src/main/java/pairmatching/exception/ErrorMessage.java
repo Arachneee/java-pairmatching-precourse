@@ -12,7 +12,8 @@ public enum ErrorMessage {
     IO("IO 예외입니다."),
     INVALID_REMATCH("재입력 여부 값이 존재하지 않습니다."),
     INVALID_CREW("존재하지 않는 크루입니다."),
-    INVALID_PAIR_COUNT("페어매칭에 필요한 크루수가 부족합니다.");
+    INVALID_PAIR_COUNT("페어매칭에 필요한 크루수가 부족합니다."),
+    INVALID_INFO("매칭 결과가 없습니다.");
 
     private static final String PREFIX = "[ERROR] ";
     private final String message;

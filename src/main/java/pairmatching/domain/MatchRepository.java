@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import pairmatching.exception.ErrorMessage;
+import pairmatching.exception.PairMatchingException;
 
 public class MatchRepository {
 
@@ -25,5 +27,11 @@ public class MatchRepository {
 
     public static void save(final MatchInfo matchInfo, final Pairs pairs) {
         matchTable.put(matchInfo, pairs);
+    }
+
+    public static Pairs findPairsByMatchInfo(MatchInfo matchInfo) {
+        return matchTable.computeIfAbsent(matchInfo, key -> {
+            throw new PairMatchingException(ErrorMessage.INVALID_INFO);
+        });
     }
 }

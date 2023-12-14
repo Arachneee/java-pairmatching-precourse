@@ -119,7 +119,6 @@ public class PairMatchingController {
             outputView.printMatchResult(pairsDto);
             break;
         }
-
     }
 
     private Pairs getPairs(final MatchInfo matchInfo) {
@@ -189,7 +188,12 @@ public class PairMatchingController {
     }
 
     private void readPair() {
+        outputView.printInfo();
+        final MatchInfo matchInfo = getMatchInfo();
 
+        Pairs pairs = MatchRepository.findPairsByMatchInfo(matchInfo);
+        PairsDto pairsDto = PairsDto.from(pairs);
+        outputView.printMatchResult(pairsDto);
     }
 
     private void initPair() {
