@@ -29,4 +29,15 @@ public enum MainFunction {
     }
 
 
+    public boolean isMatch() {
+        return this.equals(MATCH);
+    }
+
+    public boolean isRead() {
+        return this.equals(READ);
+    }
+
+    public boolean isInit() {
+        return this.equals(INIT);
+    }
 }
