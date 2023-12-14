@@ -15,7 +15,7 @@ public enum Course {
     private static final Map<String, Course> coures = Arrays.stream(values())
             .collect(Collectors.toMap(course -> course.name,
                     course -> course));
-    private String name;
+    private final String name;
 
 
     Course(final String name) {

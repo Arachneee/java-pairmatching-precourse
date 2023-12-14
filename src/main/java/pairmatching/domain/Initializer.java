@@ -22,13 +22,11 @@ public final class Initializer {
 
     private static FileInputStream readFile(final String fileName) {
         final ClassLoader classLoader = Initializer.class.getClassLoader();
-        FileInputStream file = null;
         try {
-            file = new FileInputStream(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
+            return new FileInputStream(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
         } catch (FileNotFoundException e) {
             throw new PairMatchingException(ErrorMessage.FILE_NOT_FOUND);
         }
-        return file;
     }
 
     private static void saveCrews(Course course, FileInputStream file) {
