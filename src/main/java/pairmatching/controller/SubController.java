@@ -1,10 +1,12 @@
 package pairmatching.controller;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 import pairmatching.domain.MatchInfo;
 import pairmatching.domain.MatchRepository;
-import pairmatching.domain.constant.MainFunction;
-import pairmatching.domain.constant.Rematch;
 import pairmatching.dto.PairsDto;
+import pairmatching.exception.ErrorMessage;
 import pairmatching.exception.PairMatchingException;
 import pairmatching.service.MatchService;
 import pairmatching.util.ExceptionRoofer;
@@ -18,27 +20,13 @@ public class SubController {
     private final OutputView outputView;
     private final MatchService matchService;
 
-    public SubController(InputView inputView, OutputView outputView, MatchService matchService) {
+    public SubController(final InputView inputView, final OutputView outputView, final MatchService matchService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.matchService = matchService;
     }
 
-    public void run(final MainFunction mainFunction) {
-        if (mainFunction.isMatch()) {
-            matchPair();
-            return;
-        }
-        if (mainFunction.isRead()) {
-            readPair();
-            return;
-        }
-        if (mainFunction.isInit()) {
-            initPair();
-        }
-    }
-
-    private void matchPair() {
+    public void matchPair() {
         outputView.printInfo();
         final MatchInfo matchInfo = getMatchInfo();
         runMatching(matchInfo);
@@ -74,7 +62,7 @@ public class SubController {
         });
     }
 
-    private void readPair() {
+    public void readPair() {
         outputView.printInfo();
         final MatchInfo matchInfo = getMatchInfo();
 
@@ -86,8 +74,33 @@ public class SubController {
         }
     }
 
-    private void initPair() {
+    public void initPair() {
         matchService.init();
         outputView.printInit();
+    }
+
+    private enum Rematch {
+
+        YES("네"),
+        NO("아니오");
+
+        private static final Map<String, Rematch> rematches = Arrays.stream(values())
+                .collect(Collectors.toMap(rematch -> rematch.value,
+                        rematch -> rematch));
+        private final String value;
+
+        Rematch(final String value) {
+            this.value = value;
+        }
+
+        public static Rematch from(final String value) {
+            return rematches.computeIfAbsent(value, key -> {
+                throw new PairMatchingException(ErrorMessage.INVALID_REMATCH);
+            });
+        }
+
+        public boolean isNo() {
+            return this.equals(NO);
+        }
     }
 }

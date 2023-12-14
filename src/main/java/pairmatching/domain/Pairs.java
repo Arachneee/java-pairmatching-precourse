@@ -34,7 +34,8 @@ public class Pairs {
         final int count = crews.size();
 
         for (int i = 0; i < count; i += 2) {
-            pairs.add(new Pair(crews.get(i), crews.get(i + 1)));
+            final Pair pair = new Pair(crews.get(i), crews.get(i + 1));
+            pairs.add(pair);
         }
 
         return new Pairs(pairs);
@@ -45,10 +46,13 @@ public class Pairs {
         final int count = crews.size();
 
         for (int i = 0; i < count - 3; i += 2) {
-            pairs.add(new Pair(crews.get(i), crews.get(i + 1)));
+            final Pair pair = new Pair(crews.get(i), crews.get(i + 1));
+            pairs.add(pair);
         }
 
-        pairs.add(new Pair(crews.get(count - 3), crews.get(count - 2), crews.get(count - 1)));
+        Pair pair = new Pair(crews.get(count - 3), crews.get(count - 2), crews.get(count - 1));
+        pairs.add(pair);
+
         return new Pairs(pairs);
     }
 

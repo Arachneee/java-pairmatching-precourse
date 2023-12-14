@@ -37,4 +37,8 @@ public enum Mission {
     public boolean isNotLevel(final Level level) {
         return !this.level.equals(level);
     }
+
+    public Level getLevel() {
+        return level;
+    }
 }

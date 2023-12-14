@@ -23,7 +23,7 @@ public class MatchService {
         final List<String> crewNames = CrewRepository.findNameByCourse(matchInfo.getCourse());
         final List<Pairs> levelPairs = MatchRepository.findPairsByLevel(matchInfo.getLevel());
 
-        Pairs pairs = getPairs(matchInfo, crewNames, levelPairs);
+        final Pairs pairs = getPairs(matchInfo, crewNames, levelPairs);
         return PairsDto.from(pairs);
     }
 
@@ -31,7 +31,7 @@ public class MatchService {
         int shuffleCount = 3;
 
         while (shuffleCount-- > 0) {
-            final Pairs pairs = createPairs(crewNames);
+            final Pairs pairs = getRandomPairs(crewNames);
             if (hasDuplicatePair(levelPairs, pairs)) {
                 continue;
             }
@@ -41,7 +41,7 @@ public class MatchService {
         throw new PairMatchingException(ErrorMessage.CANT_FIND_PAIR);
     }
 
-    private Pairs createPairs(final List<String> crewNames) {
+    private Pairs getRandomPairs(final List<String> crewNames) {
         final List<String> shuffledCrewNames = shuffler.shuffle(crewNames);
         final List<Crew> crews = CrewRepository.findByName(shuffledCrewNames);
 

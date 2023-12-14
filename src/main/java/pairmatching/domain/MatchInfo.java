@@ -10,12 +10,10 @@ import pairmatching.exception.PairMatchingException;
 public class MatchInfo {
 
     private final Course course;
-    private final Level level;
     private final Mission mission;
 
-    private MatchInfo(final Course course, final Level level, final Mission mission) {
+    private MatchInfo(final Course course, final Mission mission) {
         this.course = course;
-        this.level = level;
         this.mission = mission;
     }
 
@@ -24,11 +22,11 @@ public class MatchInfo {
             throw new PairMatchingException(ErrorMessage.INVALID_MISSION);
         }
 
-        return new MatchInfo(course, level, mission);
+        return new MatchInfo(course, mission);
     }
 
     public boolean isLevel(final Level level) {
-        return this.level.equals(level);
+        return !this.mission.isNotLevel(level);
     }
 
     public Course getCourse() {
@@ -36,7 +34,7 @@ public class MatchInfo {
     }
 
     public Level getLevel() {
-        return level;
+        return mission.getLevel();
     }
 
     @Override
@@ -48,11 +46,11 @@ public class MatchInfo {
             return false;
         }
         MatchInfo matchInfo = (MatchInfo) o;
-        return course == matchInfo.course && level == matchInfo.level && mission == matchInfo.mission;
+        return course == matchInfo.course && mission == matchInfo.mission;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(course, level, mission);
+        return Objects.hash(course, mission);
     }
 }
