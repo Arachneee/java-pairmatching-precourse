@@ -15,6 +15,8 @@ import pairmatching.domain.CrewRepository;
 import pairmatching.domain.MainFunction;
 import pairmatching.domain.MatchInfo;
 import pairmatching.domain.MatchRepository;
+import pairmatching.domain.Pair;
+import pairmatching.domain.Pairs;
 import pairmatching.domain.Rematch;
 import pairmatching.exception.ErrorMessage;
 import pairmatching.exception.PairMatchingException;
@@ -109,52 +111,61 @@ public class PairMatchingController {
             // rematch is YES
         }
 
-        List<List<Crew>> pairs = getPairs(matchInfo);
+        Pairs pairs = getPairs(matchInfo);
 
 
     }
 
-    private List<List<Crew>> getPairs(final MatchInfo matchInfo) {
+    private Pairs getPairs(final MatchInfo matchInfo) {
         List<String> crewNames = CrewRepository.findNameByCourse(matchInfo.getCourse());
-        List<List<Crew>> pairs = createPairs(crewNames);
+        while (true) {
+            Pairs pairs = createPairs(crewNames);
+            List<Pairs> levelPairs = MatchRepository.findPairsByLevel(matchInfo.getLevel());
+            if (hasDuplicatePair(levelPairs, pairs)) {
+                continue;
+            }
 
+            return pairs;
+        }
     }
 
-    private List<List<Crew>> createPairs(List<String> crewNames) {
+    private boolean hasDuplicatePair(List<Pairs> levelPairs, Pairs pairs) {
+        return levelPairs.stream()
+                .anyMatch(pairs::hasDuplicatePair);
+    }
+
+    private Pairs createPairs(List<String> crewNames) {
         if (crewNames.size() < 2) {
             throw new PairMatchingException(ErrorMessage.INVALID_PAIR_COUNT);
         }
 
         List<String> shuffledCrewNames = Randoms.shuffle(crewNames);
 
-        List<List<Crew>> pairs = new ArrayList<>();
+        List<Pair> pairs = new ArrayList<>();
 
         int count = shuffledCrewNames.size();
 
-        if (count % 2 == 0) {
-            for (int i = 0; i < count; i += 2) {
-                List<Crew> pair = new ArrayList<>();
-                pair.add(CrewRepository.findByName(shuffledCrewNames.get(i)));
-                pair.add(CrewRepository.findByName(shuffledCrewNames.get(i + 1)));
+        for (int i = 0; i < count - 3; i += 2) {
+            Crew crew1 = CrewRepository.findByName(shuffledCrewNames.get(i));
+            Crew crew2 = CrewRepository.findByName(shuffledCrewNames.get(i + 1));
 
-                pairs.add(pair);
-            }
-        } else {
-            for (int i = 0; i < count - 3; i += 2) {
-                List<Crew> pair = new ArrayList<>();
-                pair.add(CrewRepository.findByName(shuffledCrewNames.get(i)));
-                pair.add(CrewRepository.findByName(shuffledCrewNames.get(i + 1)));
-
-                pairs.add(pair);
-            }
-            List<Crew> pair = new ArrayList<>();
-            pair.add(CrewRepository.findByName(shuffledCrewNames.get(count - 1)));
-            pair.add(CrewRepository.findByName(shuffledCrewNames.get(count - 2)));
-            pair.add(CrewRepository.findByName(shuffledCrewNames.get(count - 3)));
-            pairs.add(pair);
+            pairs.add(new Pair(crew1, crew2));
         }
 
-        return pairs;
+        if (count % 2 == 0) {
+            Crew crew1 = CrewRepository.findByName(shuffledCrewNames.get(count - 1));
+            Crew crew2 = CrewRepository.findByName(shuffledCrewNames.get(count - 2));
+
+            pairs.add(new Pair(crew1, crew2));
+        } else {
+            Crew crew1 = CrewRepository.findByName(shuffledCrewNames.get(count - 1));
+            Crew crew2 = CrewRepository.findByName(shuffledCrewNames.get(count - 2));
+            Crew crew3 = CrewRepository.findByName(shuffledCrewNames.get(count - 3));
+
+            pairs.add(new Pair(crew1, crew2, crew3));
+        }
+
+        return new Pairs(pairs);
     }
 
     private Rematch getRematch() {

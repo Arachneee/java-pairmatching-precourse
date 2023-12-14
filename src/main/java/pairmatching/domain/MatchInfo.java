@@ -13,8 +13,16 @@ public class MatchInfo {
         this.mission = mission;
     }
 
+    public boolean isLevel(final Level level) {
+        return this.level.equals(level);
+    }
+
     public Course getCourse() {
         return course;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     @Override
