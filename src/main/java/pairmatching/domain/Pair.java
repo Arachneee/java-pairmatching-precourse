@@ -1,7 +1,9 @@
 package pairmatching.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pair {
 
@@ -30,5 +32,11 @@ public class Pair {
 
     private boolean contain(final Crew crew) {
         return crews.contains(crew);
+    }
+
+    public List<String> getNames() {
+        return Collections.unmodifiableList(crews.stream()
+                .map(Crew::getName)
+                .collect(Collectors.toList()));
     }
 }

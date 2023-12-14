@@ -18,6 +18,7 @@ import pairmatching.domain.MatchRepository;
 import pairmatching.domain.Pair;
 import pairmatching.domain.Pairs;
 import pairmatching.domain.Rematch;
+import pairmatching.dto.PairsDto;
 import pairmatching.exception.ErrorMessage;
 import pairmatching.exception.PairMatchingException;
 import pairmatching.util.ExceptionRoofer;
@@ -101,18 +102,23 @@ public class PairMatchingController {
 
     private void matchPair() {
         outputView.printInfo();
-        final MatchInfo matchInfo = getMatchInfo();
+        while (true) {
+            final MatchInfo matchInfo = getMatchInfo();
 
-        if (MatchRepository.containKey(matchInfo)) {
-            final Rematch rematch = getRematch();
-            if (rematch.isNo()) {
-                return;
+            if (MatchRepository.containKey(matchInfo)) {
+                final Rematch rematch = getRematch();
+                if (rematch.isNo()) {
+                    continue;
+                }
+                // rematch is YES
             }
-            // rematch is YES
-        }
 
-        Pairs pairs = getPairs(matchInfo);
-        MatchRepository.save(matchInfo, pairs);
+            Pairs pairs = getPairs(matchInfo);
+            MatchRepository.save(matchInfo, pairs);
+            PairsDto pairsDto = PairsDto.from(pairs);
+            outputView.printMatchResult(pairsDto);
+            break;
+        }
 
     }
 

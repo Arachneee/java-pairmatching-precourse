@@ -1,5 +1,8 @@
 package pairmatching.view;
 
+import java.util.List;
+import pairmatching.dto.PairsDto;
+
 public class OutputView {
 
     public void printError(final String message) {
@@ -8,6 +11,11 @@ public class OutputView {
 
     public void printInfo() {
         System.out.println(System.lineSeparator() + Response.INFO.value);
+    }
+
+    public void printMatchResult(final PairsDto pairsDto) {
+        List<List<String>> pairs = pairsDto.getPairs();
+        pairs.forEach(pair -> System.out.println(String.join(" : ", pair)));
     }
 
     private enum Response {
