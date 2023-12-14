@@ -3,6 +3,7 @@ package pairmatching.domain;
 import java.util.Objects;
 
 public class Crew {
+
     private final Course course;
     private final String name;
 

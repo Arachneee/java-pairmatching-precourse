@@ -19,7 +19,7 @@ public enum Level {
                     level -> level));
     private final String name;
 
-    Level(String name) {
+    Level(final String name) {
         this.name = name;
     }
 

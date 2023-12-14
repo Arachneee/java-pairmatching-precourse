@@ -34,4 +34,14 @@ public class CrewRepository {
                 .findAny()
                 .orElseThrow(() -> new PairMatchingException(ErrorMessage.INVALID_CREW));
     }
+
+    public static List<Crew> findByName(final List<String> names) {
+        return names.stream()
+                .map(CrewRepository::findByName)
+                .collect(Collectors.toList());
+    }
+
+    public static void init() {
+        crews = new ArrayList<>();
+    }
 }

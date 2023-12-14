@@ -9,14 +9,14 @@ public class Pair {
 
     private final List<Crew> crews;
 
-    public Pair(Crew crew1, Crew crew2) {
+    public Pair(final Crew crew1, final Crew crew2) {
         List<Crew> crews = new ArrayList<>();
         crews.add(crew1);
         crews.add(crew2);
         this.crews = crews;
     }
 
-    public Pair(Crew crew1, Crew crew2, Crew crew3) {
+    public Pair(final Crew crew1, final Crew crew2, final Crew crew3) {
         List<Crew> crews = new ArrayList<>();
         crews.add(crew1);
         crews.add(crew2);

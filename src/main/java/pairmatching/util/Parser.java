@@ -29,12 +29,10 @@ public final class Parser {
     }
 
     private static void validateMatchInfo(final String input) {
-        Matcher matcher = MATCH_INFO_PATTERN.matcher(input);
+        final Matcher matcher = MATCH_INFO_PATTERN.matcher(input);
 
-        if (matcher.matches()) {
-            return;
+        if (!matcher.matches()) {
+            throw new PairMatchingException(ErrorMessage.INVALID_FORMAT);
         }
-
-        throw new PairMatchingException(ErrorMessage.INVALID_FORMAT);
     }
 }

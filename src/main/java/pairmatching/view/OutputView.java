@@ -40,9 +40,5 @@ public class OutputView {
         Response(final String value) {
             this.value = value;
         }
-
-        public String getForFormat() {
-            return value + System.lineSeparator();
-        }
     }
 }

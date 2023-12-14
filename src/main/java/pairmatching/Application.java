@@ -1,13 +1,14 @@
 package pairmatching;
 
-import pairmatching.controller.PairMatchingController;
+import java.io.IOException;
+import pairmatching.controller.MainController;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
 public class Application {
 
     public static void main(String[] args) {
-        PairMatchingController pairMatchingController = new PairMatchingController(new InputView(), new OutputView());
-        pairMatchingController.start();
+        MainController mainController = new MainController(new InputView(), new OutputView());
+        mainController.start();
     }
 }

@@ -13,9 +13,15 @@ public class MatchRepository {
 
     private static Map<MatchInfo, Pairs> matchTable = new HashMap<>();
 
+    private MatchRepository() {
+    }
 
-    public static boolean containKey(final MatchInfo matchInfo) {
-        return matchTable.containsKey(matchInfo);
+    public static void init() {
+        matchTable = new HashMap<>();
+    }
+
+    public static void save(final MatchInfo matchInfo, final Pairs pairs) {
+        matchTable.put(matchInfo, pairs);
     }
 
     public static List<Pairs> findPairsByLevel(final Level level) {
@@ -25,17 +31,13 @@ public class MatchRepository {
                 .collect(Collectors.toList()));
     }
 
-    public static void save(final MatchInfo matchInfo, final Pairs pairs) {
-        matchTable.put(matchInfo, pairs);
-    }
-
-    public static Pairs findPairsByMatchInfo(MatchInfo matchInfo) {
+    public static Pairs findPairsByMatchInfo(final MatchInfo matchInfo) {
         return matchTable.computeIfAbsent(matchInfo, key -> {
             throw new PairMatchingException(ErrorMessage.INVALID_INFO);
         });
     }
 
-    public static void reset() {
-        matchTable = new HashMap<>();
+    public static boolean containKey(final MatchInfo matchInfo) {
+        return matchTable.containsKey(matchInfo);
     }
 }

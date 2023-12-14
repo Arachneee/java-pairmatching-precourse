@@ -18,7 +18,7 @@ public enum Course {
     private String name;
 
 
-    Course(String name) {
+    Course(final String name) {
         this.name = name;
     }
 

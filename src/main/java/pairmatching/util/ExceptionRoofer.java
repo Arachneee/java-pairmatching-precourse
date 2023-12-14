@@ -21,15 +21,4 @@ public final class ExceptionRoofer {
             }
         }
     }
-
-    public static void run(final Runnable runnable) {
-        while (true) {
-            try {
-                runnable.run();
-                return;
-            } catch (IllegalArgumentException illegalArgumentException) {
-                outputView.printError(illegalArgumentException.getMessage());
-            }
-        }
-    }
 }

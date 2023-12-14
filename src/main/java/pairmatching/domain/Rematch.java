@@ -16,7 +16,7 @@ public enum Rematch {
                     rematch -> rematch));
     private final String value;
 
-    Rematch(String value) {
+    Rematch(final String value) {
         this.value = value;
     }
 

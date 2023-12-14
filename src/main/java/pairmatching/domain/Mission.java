@@ -23,7 +23,7 @@ public enum Mission {
     private final String name;
     private final Level level;
 
-    Mission(String name, Level level) {
+    Mission(final String name, final Level level) {
         this.name = name;
         this.level = level;
     }

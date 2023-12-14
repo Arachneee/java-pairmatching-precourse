@@ -18,7 +18,7 @@ public enum MainFunction {
                     function -> function));
     private final String value;
 
-    MainFunction(String value) {
+    MainFunction(final String value) {
         this.value = value;
     }
 
@@ -39,5 +39,9 @@ public enum MainFunction {
 
     public boolean isInit() {
         return this.equals(INIT);
+    }
+
+    public boolean isTerminate() {
+        return this.equals(TERMINATE);
     }
 }
