@@ -25,4 +25,8 @@ public enum Rematch {
             throw new PairMatchingException(ErrorMessage.INVALID_REMATCH);
         });
     }
+
+    public boolean isNo() {
+        return this.equals(NO);
+    }
 }

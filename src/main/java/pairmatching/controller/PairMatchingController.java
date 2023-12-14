@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
 import pairmatching.domain.CrewRepository;
@@ -89,31 +90,43 @@ public class PairMatchingController {
 
     private MainFunction getMainFunction() {
         return ExceptionRoofer.supply(() -> {
-            String mainFunctionValue = inputView.readMainFunction();
+            final String mainFunctionValue = inputView.readMainFunction();
             return MainFunction.from(mainFunctionValue);
         });
     }
 
     private void matchPair() {
         outputView.printInfo();
-        MatchInfo matchInfo = getMatchInfo();
-        if (MatchRepository.containKey(matchInfo)) {
-            Rematch rematch = getRematch();
+        final MatchInfo matchInfo = getMatchInfo();
 
+        if (MatchRepository.containKey(matchInfo)) {
+            final Rematch rematch = getRematch();
+            if (rematch.isNo()) {
+                return;
+            }
+            // rematch is YES
         }
+
+        List<List<Crew>> pairs = getPairs(matchInfo);
+
+
+    }
+
+    private List<List<Crew>> getPairs(final MatchInfo matchInfo) {
+        List<String> crewNames = CrewRepository.findNameByCourse(matchInfo.getCourse());
 
     }
 
     private Rematch getRematch() {
         return ExceptionRoofer.supply(() -> {
-            String reMatch = inputView.readRematch();
+            final String reMatch = inputView.readRematch();
             return Rematch.from(reMatch);
         });
     }
 
     private MatchInfo getMatchInfo() {
         return ExceptionRoofer.supply(() -> {
-            String courseMissionLevel = inputView.readInfo();
+            final String courseMissionLevel = inputView.readInfo();
             return Parser.convertToMatchInfo(courseMissionLevel);
         });
     }

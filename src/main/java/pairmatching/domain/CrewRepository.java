@@ -2,6 +2,7 @@ package pairmatching.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import pairmatching.exception.ErrorMessage;
 import pairmatching.exception.PairMatchingException;
 
@@ -18,5 +19,12 @@ public class CrewRepository {
         }
 
         crews.add(crew);
+    }
+
+    public static List<String> findNameByCourse(final Course course) {
+        return crews.stream()
+                .filter(crew -> crew.isCourse(course))
+                .map(Crew::getName)
+                .collect(Collectors.toList());
     }
 }

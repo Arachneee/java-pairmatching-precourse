@@ -13,6 +13,10 @@ public class MatchInfo {
         this.mission = mission;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
