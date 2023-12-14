@@ -1,4 +1,4 @@
-package pairmatching.domain;
+package pairmatching.domain.constant;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -34,5 +34,7 @@ public enum Mission {
         });
     }
 
-
+    public boolean isNotLevel(final Level level) {
+        return !this.level.equals(level);
+    }
 }

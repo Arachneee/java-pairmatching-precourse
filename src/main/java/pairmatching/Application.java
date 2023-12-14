@@ -1,6 +1,5 @@
 package pairmatching;
 
-import java.io.IOException;
 import pairmatching.controller.MainController;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;

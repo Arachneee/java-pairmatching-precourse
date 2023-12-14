@@ -16,7 +16,7 @@ public class InputView {
     }
 
     public String readRematch() {
-        System.out.println(Request.REMATCH.value);
+        System.out.println(System.lineSeparator() + Request.REMATCH.value);
         return Console.readLine();
     }
 

@@ -3,10 +3,10 @@ package pairmatching.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import pairmatching.domain.Course;
-import pairmatching.domain.Level;
+import pairmatching.domain.constant.Course;
+import pairmatching.domain.constant.Level;
 import pairmatching.domain.MatchInfo;
-import pairmatching.domain.Mission;
+import pairmatching.domain.constant.Mission;
 import pairmatching.exception.ErrorMessage;
 import pairmatching.exception.PairMatchingException;
 
@@ -25,7 +25,7 @@ public final class Parser {
         final Level level = Level.from(matchInfo[1]);
         final Mission mission = Mission.from(matchInfo[2]);
 
-        return new MatchInfo(course, level, mission);
+        return MatchInfo.of(course, level, mission);
     }
 
     private static void validateMatchInfo(final String input) {

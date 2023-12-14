@@ -5,7 +5,7 @@ import pairmatching.dto.PairsDto;
 public class OutputView {
 
     public void printError(final String message) {
-        System.out.println(message);
+        System.out.println(System.lineSeparator() + message + System.lineSeparator());
     }
 
     public void printInfo() {

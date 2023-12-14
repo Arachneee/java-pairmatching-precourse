@@ -1,6 +1,11 @@
 package pairmatching.domain;
 
 import java.util.Objects;
+import pairmatching.domain.constant.Course;
+import pairmatching.domain.constant.Level;
+import pairmatching.domain.constant.Mission;
+import pairmatching.exception.ErrorMessage;
+import pairmatching.exception.PairMatchingException;
 
 public class MatchInfo {
 
@@ -8,10 +13,18 @@ public class MatchInfo {
     private final Level level;
     private final Mission mission;
 
-    public MatchInfo(final Course course, final Level level, final Mission mission) {
+    private MatchInfo(final Course course, final Level level, final Mission mission) {
         this.course = course;
         this.level = level;
         this.mission = mission;
+    }
+
+    public static MatchInfo of(final Course course, final Level level, final Mission mission) {
+        if (mission.isNotLevel(level)) {
+            throw new PairMatchingException(ErrorMessage.INVALID_MISSION);
+        }
+
+        return new MatchInfo(course, level, mission);
     }
 
     public boolean isLevel(final Level level) {

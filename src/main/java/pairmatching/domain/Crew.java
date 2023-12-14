@@ -1,6 +1,7 @@
 package pairmatching.domain;
 
 import java.util.Objects;
+import pairmatching.domain.constant.Course;
 
 public class Crew {
 

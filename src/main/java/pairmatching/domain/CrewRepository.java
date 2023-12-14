@@ -3,6 +3,7 @@ package pairmatching.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import pairmatching.domain.constant.Course;
 import pairmatching.exception.ErrorMessage;
 import pairmatching.exception.PairMatchingException;
 
