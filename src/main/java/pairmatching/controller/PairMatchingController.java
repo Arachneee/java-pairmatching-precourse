@@ -197,6 +197,7 @@ public class PairMatchingController {
     }
 
     private void initPair() {
-
+        MatchRepository.reset();
+        outputView.printInit();
     }
 }

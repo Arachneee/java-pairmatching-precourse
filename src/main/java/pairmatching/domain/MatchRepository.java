@@ -34,4 +34,8 @@ public class MatchRepository {
             throw new PairMatchingException(ErrorMessage.INVALID_INFO);
         });
     }
+
+    public static void reset() {
+        matchTable = new HashMap<>();
+    }
 }

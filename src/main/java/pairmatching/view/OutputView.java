@@ -18,6 +18,10 @@ public class OutputView {
         System.out.println();
     }
 
+    public void printInit() {
+        System.out.println(System.lineSeparator() + Response.INIT.value);
+    }
+
     private enum Response {
         INFO("#############################################\n"
                 + "과정: 백엔드 | 프론트엔드\n"
@@ -28,7 +32,8 @@ public class OutputView {
                 + "  - 레벨4: 성능개선 | 배포\n"
                 + "  - 레벨5: \n"
                 + "############################################"),
-        RESULT("페어 매칭 결과입니다.");
+        RESULT("페어 매칭 결과입니다."),
+        INIT("초기화 되었습니다.");
 
         private final String value;
 
