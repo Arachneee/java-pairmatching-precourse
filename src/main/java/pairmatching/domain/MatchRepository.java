@@ -9,5 +9,7 @@ public class MatchRepository {
     private static Map<MatchInfo, List<List<Crew>>> matchTable = new HashMap<>();
 
 
-
+    public static boolean containKey(final MatchInfo matchInfo) {
+        return matchTable.containsKey(matchInfo);
+    }
 }
