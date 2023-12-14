@@ -12,6 +12,7 @@ import pairmatching.domain.CrewRepository;
 import pairmatching.domain.MainFunction;
 import pairmatching.domain.MatchInfo;
 import pairmatching.domain.MatchRepository;
+import pairmatching.domain.Rematch;
 import pairmatching.exception.ErrorMessage;
 import pairmatching.exception.PairMatchingException;
 import pairmatching.util.ExceptionRoofer;
@@ -97,9 +98,17 @@ public class PairMatchingController {
         outputView.printInfo();
         MatchInfo matchInfo = getMatchInfo();
         if (MatchRepository.containKey(matchInfo)) {
+            Rematch rematch = getRematch();
 
         }
 
+    }
+
+    private Rematch getRematch() {
+        return ExceptionRoofer.supply(() -> {
+            String reMatch = inputView.readRematch();
+            return Rematch.from(reMatch);
+        });
     }
 
     private MatchInfo getMatchInfo() {
