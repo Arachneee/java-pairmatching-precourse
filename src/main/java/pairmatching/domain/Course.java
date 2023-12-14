@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 import pairmatching.exception.ErrorMessage;
-import pairmatching.exception.ParMatchingException;
+import pairmatching.exception.PairMatchingException;
 
 public enum Course {
 
@@ -24,7 +24,7 @@ public enum Course {
 
     public static Course from(final String name) {
         return coures.computeIfAbsent(name, key -> {
-            throw new ParMatchingException(ErrorMessage.INVALID_COURSE);
+            throw new PairMatchingException(ErrorMessage.INVALID_COURSE);
         });
     }
 }

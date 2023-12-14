@@ -1,8 +1,18 @@
 package pairmatching.controller;
 
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import pairmatching.domain.Course;
+import pairmatching.domain.Crew;
+import pairmatching.domain.CrewRepository;
 import pairmatching.domain.MainFunction;
 import pairmatching.domain.MatchInfo;
+import pairmatching.exception.ErrorMessage;
+import pairmatching.exception.PairMatchingException;
 import pairmatching.util.ExceptionRoofer;
 import pairmatching.util.Parser;
 import pairmatching.view.InputView;
@@ -24,7 +34,31 @@ public class PairMatchingController {
     }
 
     private void init() {
+        initCrew(Course.BACKEND, "backend-crew.md");
+        initCrew(Course.FRONTEND, "frontend-crew.md");
+    }
 
+    private static void initCrew(final Course course, final String fileName) {
+        ClassLoader classLoader = PairMatchingController.class.getClassLoader();
+        FileInputStream file = null;
+        try {
+            file = new FileInputStream(classLoader.getResource(fileName).getFile());
+        } catch (FileNotFoundException e) {
+            throw new PairMatchingException(ErrorMessage.FILE_NOT_FOUND);
+        }
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file));
+
+        while (true) {
+            try {
+                String crewName = bufferedReader.readLine();
+                if (crewName == null) {
+                    break;
+                }
+                CrewRepository.addCrew(new Crew(course, crewName));
+            } catch (IOException e) {
+                throw new PairMatchingException(ErrorMessage.IO);
+            }
+        }
     }
 
     private void run() {
@@ -51,6 +85,13 @@ public class PairMatchingController {
 
     }
 
+    private MainFunction getMainFunction() {
+        return ExceptionRoofer.supply(() -> {
+            String mainFunctionValue = inputView.readMainFunction();
+            return MainFunction.from(mainFunctionValue);
+        });
+    }
+
     private void matchPair() {
         outputView.printInfo();
         MatchInfo matchInfo = getMatchInfo();
@@ -64,10 +105,11 @@ public class PairMatchingController {
         });
     }
 
-    private MainFunction getMainFunction() {
-        return ExceptionRoofer.supply(() -> {
-            String mainFunctionValue = inputView.readMainFunction();
-            return MainFunction.from(mainFunctionValue);
-        });
+    private void readPair() {
+
+    }
+
+    private void initPair() {
+
     }
 }

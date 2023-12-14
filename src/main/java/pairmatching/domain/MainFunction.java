@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 import pairmatching.exception.ErrorMessage;
-import pairmatching.exception.ParMatchingException;
+import pairmatching.exception.PairMatchingException;
 
 public enum MainFunction {
 
@@ -24,7 +24,7 @@ public enum MainFunction {
 
     public static MainFunction from(final String value) {
         return mainFunctions.computeIfAbsent(value, key -> {
-            throw new ParMatchingException(ErrorMessage.INVALID_MAIN_FUNCTION);
+            throw new PairMatchingException(ErrorMessage.INVALID_MAIN_FUNCTION);
         });
     }
 

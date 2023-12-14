@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 import pairmatching.exception.ErrorMessage;
-import pairmatching.exception.ParMatchingException;
+import pairmatching.exception.PairMatchingException;
 
 public enum Mission {
 
@@ -30,7 +30,7 @@ public enum Mission {
 
     public static Mission from(final String name) {
         return missions.computeIfAbsent(name, key -> {
-            throw new ParMatchingException(ErrorMessage.INVALID_MISSION);
+            throw new PairMatchingException(ErrorMessage.INVALID_MISSION);
         });
     }
 

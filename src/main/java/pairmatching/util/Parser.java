@@ -8,7 +8,7 @@ import pairmatching.domain.Level;
 import pairmatching.domain.MatchInfo;
 import pairmatching.domain.Mission;
 import pairmatching.exception.ErrorMessage;
-import pairmatching.exception.ParMatchingException;
+import pairmatching.exception.PairMatchingException;
 
 public final class Parser {
 
@@ -35,6 +35,6 @@ public final class Parser {
             return;
         }
 
-        throw new ParMatchingException(ErrorMessage.INVALID_FORMAT);
+        throw new PairMatchingException(ErrorMessage.INVALID_FORMAT);
     }
 }

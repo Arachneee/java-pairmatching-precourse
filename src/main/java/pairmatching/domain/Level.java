@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 import pairmatching.exception.ErrorMessage;
-import pairmatching.exception.ParMatchingException;
+import pairmatching.exception.PairMatchingException;
 
 public enum Level {
 
@@ -25,7 +25,7 @@ public enum Level {
 
     public static Level from(final String name) {
         return levels.computeIfAbsent(name, key -> {
-            throw new ParMatchingException(ErrorMessage.INVALID_LEVEL);
+            throw new PairMatchingException(ErrorMessage.INVALID_LEVEL);
         });
     }
 
