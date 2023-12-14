@@ -1,6 +1,5 @@
 package pairmatching.view;
 
-import java.util.List;
 import pairmatching.dto.PairsDto;
 
 public class OutputView {
@@ -14,8 +13,9 @@ public class OutputView {
     }
 
     public void printMatchResult(final PairsDto pairsDto) {
-        List<List<String>> pairs = pairsDto.getPairs();
-        pairs.forEach(pair -> System.out.println(String.join(" : ", pair)));
+        System.out.println(System.lineSeparator() + Response.RESULT.value);
+        pairsDto.getPairs().forEach(pair -> System.out.println(String.join(" : ", pair)));
+        System.out.println();
     }
 
     private enum Response {
@@ -27,7 +27,8 @@ public class OutputView {
                 + "  - 레벨3: \n"
                 + "  - 레벨4: 성능개선 | 배포\n"
                 + "  - 레벨5: \n"
-                + "############################################");
+                + "############################################"),
+        RESULT("페어 매칭 결과입니다.");
 
         private final String value;
 
