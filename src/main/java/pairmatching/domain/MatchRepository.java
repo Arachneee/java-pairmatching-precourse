@@ -22,4 +22,8 @@ public class MatchRepository {
                 .map(Entry::getValue)
                 .collect(Collectors.toList()));
     }
+
+    public static void save(final MatchInfo matchInfo, final Pairs pairs) {
+        matchTable.put(matchInfo, pairs);
+    }
 }

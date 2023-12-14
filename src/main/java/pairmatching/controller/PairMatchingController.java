@@ -112,7 +112,7 @@ public class PairMatchingController {
         }
 
         Pairs pairs = getPairs(matchInfo);
-
+        MatchRepository.save(matchInfo, pairs);
 
     }
 
