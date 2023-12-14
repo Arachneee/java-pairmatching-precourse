@@ -1,11 +1,13 @@
 package pairmatching.controller;
 
 
+import pairmatching.domain.RandomShuffler;
 import pairmatching.domain.constant.Course;
 import pairmatching.domain.CrewRepository;
 import pairmatching.domain.Initializer;
 import pairmatching.domain.constant.MainFunction;
 import pairmatching.domain.MatchRepository;
+import pairmatching.service.MatchService;
 import pairmatching.util.ExceptionRoofer;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
@@ -39,7 +41,7 @@ public class MainController {
                 break;
             }
 
-            final SubController subController = new SubController(inputView, outputView);
+            final SubController subController = new SubController(inputView, outputView, new MatchService(new RandomShuffler()));
             subController.run(mainFunction);
         }
     }
