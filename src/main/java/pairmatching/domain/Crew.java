@@ -15,6 +15,10 @@ public class Crew {
         return this.course.equals(course);
     }
 
+    public boolean isName(final String name) {
+        return this.name.equals(name);
+    }
+
     public String getName() {
         return name;
     }

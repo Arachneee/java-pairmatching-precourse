@@ -10,7 +10,9 @@ public enum ErrorMessage {
     DUPLICATED_CREW("중복된 크루입니다."),
     FILE_NOT_FOUND("파일을 찾을 수 없습니다."),
     IO("IO 예외입니다."),
-    INVALID_REMATCH("재입력 여부 값이 존재하지 않습니다.");
+    INVALID_REMATCH("재입력 여부 값이 존재하지 않습니다."),
+    INVALID_CREW("존재하지 않는 크루입니다."),
+    INVALID_PAIR_COUNT("페어매칭에 필요한 크루수가 부족합니다.");
 
     private static final String PREFIX = "[ERROR] ";
     private final String message;

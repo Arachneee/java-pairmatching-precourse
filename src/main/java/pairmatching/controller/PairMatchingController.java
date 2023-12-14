@@ -1,11 +1,13 @@
 package pairmatching.controller;
 
 
+import camp.nextstep.edu.missionutils.Randoms;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
@@ -114,7 +116,45 @@ public class PairMatchingController {
 
     private List<List<Crew>> getPairs(final MatchInfo matchInfo) {
         List<String> crewNames = CrewRepository.findNameByCourse(matchInfo.getCourse());
+        List<List<Crew>> pairs = createPairs(crewNames);
 
+    }
+
+    private List<List<Crew>> createPairs(List<String> crewNames) {
+        if (crewNames.size() < 2) {
+            throw new PairMatchingException(ErrorMessage.INVALID_PAIR_COUNT);
+        }
+
+        List<String> shuffledCrewNames = Randoms.shuffle(crewNames);
+
+        List<List<Crew>> pairs = new ArrayList<>();
+
+        int count = shuffledCrewNames.size();
+
+        if (count % 2 == 0) {
+            for (int i = 0; i < count; i += 2) {
+                List<Crew> pair = new ArrayList<>();
+                pair.add(CrewRepository.findByName(shuffledCrewNames.get(i)));
+                pair.add(CrewRepository.findByName(shuffledCrewNames.get(i + 1)));
+
+                pairs.add(pair);
+            }
+        } else {
+            for (int i = 0; i < count - 3; i += 2) {
+                List<Crew> pair = new ArrayList<>();
+                pair.add(CrewRepository.findByName(shuffledCrewNames.get(i)));
+                pair.add(CrewRepository.findByName(shuffledCrewNames.get(i + 1)));
+
+                pairs.add(pair);
+            }
+            List<Crew> pair = new ArrayList<>();
+            pair.add(CrewRepository.findByName(shuffledCrewNames.get(count - 1)));
+            pair.add(CrewRepository.findByName(shuffledCrewNames.get(count - 2)));
+            pair.add(CrewRepository.findByName(shuffledCrewNames.get(count - 3)));
+            pairs.add(pair);
+        }
+
+        return pairs;
     }
 
     private Rematch getRematch() {

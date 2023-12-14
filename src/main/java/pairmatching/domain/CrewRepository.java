@@ -27,4 +27,11 @@ public class CrewRepository {
                 .map(Crew::getName)
                 .collect(Collectors.toList());
     }
+
+    public static Crew findByName(final String name) {
+        return crews.stream()
+                .filter(crew -> crew.isName(name))
+                .findAny()
+                .orElseThrow(() -> new PairMatchingException(ErrorMessage.INVALID_CREW));
+    }
 }
