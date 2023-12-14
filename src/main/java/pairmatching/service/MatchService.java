@@ -1,6 +1,5 @@
 package pairmatching.service;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
 import pairmatching.domain.Crew;
 import pairmatching.domain.CrewRepository;
@@ -22,17 +21,22 @@ public class MatchService {
 
     public PairsDto createPairs(final MatchInfo matchInfo) {
         final List<String> crewNames = CrewRepository.findNameByCourse(matchInfo.getCourse());
+        final List<Pairs> levelPairs = MatchRepository.findPairsByLevel(matchInfo.getLevel());
+
+        Pairs pairs = getPairs(matchInfo, crewNames, levelPairs);
+        return PairsDto.from(pairs);
+    }
+
+    private Pairs getPairs(final MatchInfo matchInfo, final List<String> crewNames, final List<Pairs> levelPairs) {
         int shuffleCount = 3;
 
         while (shuffleCount-- > 0) {
             final Pairs pairs = createPairs(crewNames);
-            final List<Pairs> levelPairs = MatchRepository.findPairsByLevel(matchInfo.getLevel());
-
             if (hasDuplicatePair(levelPairs, pairs)) {
                 continue;
             }
             MatchRepository.save(matchInfo, pairs);
-            return PairsDto.from(pairs);
+            return pairs;
         }
         throw new PairMatchingException(ErrorMessage.CANT_FIND_PAIR);
     }
@@ -52,5 +56,9 @@ public class MatchService {
     public PairsDto find(final MatchInfo matchInfo) {
         final Pairs pairs = MatchRepository.findPairsByMatchInfo(matchInfo);
         return PairsDto.from(pairs);
+    }
+
+    public void init() {
+        MatchRepository.init();
     }
 }

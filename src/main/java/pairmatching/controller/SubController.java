@@ -41,7 +41,7 @@ public class SubController {
     private void matchPair() {
         outputView.printInfo();
         final MatchInfo matchInfo = getMatchInfo();
-        checkRematch(matchInfo);
+        runMatching(matchInfo);
     }
 
     private MatchInfo getMatchInfo() {
@@ -51,7 +51,7 @@ public class SubController {
         });
     }
 
-    private void checkRematch(final MatchInfo matchInfo) {
+    private void runMatching(final MatchInfo matchInfo) {
         if (MatchRepository.containKey(matchInfo)) {
             final Rematch rematch = getRematch();
             if (rematch.isNo()) {
@@ -87,7 +87,7 @@ public class SubController {
     }
 
     private void initPair() {
-        MatchRepository.init();
+        matchService.init();
         outputView.printInit();
     }
 }
